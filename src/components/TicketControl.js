@@ -3,6 +3,8 @@ import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
+import db from './../firebase.js';
+import { collection, addDoc } from "firebase/firestore";
 
 function TicketControl() {
 
@@ -41,9 +43,13 @@ function TicketControl() {
     setSelectedTicket(null);
   }
 
-  const handleAddingNewTicketToList = (newTicket) => {
-    const newMainTicketList = mainTicketList.concat(newTicket);
-    setMainTicketList(newMainTicketList);
+  // helper func from firestore
+  // this is changed to an async call/response to the db
+  // collection() takes in the db instance and the desired collection name returning a CollectionReference obj
+  // addDoc() does just that with 2 args: collection reference and new data to be added
+  // NOTE: the data we add as 2nd arg must always be an obj
+  const handleAddingNewTicketToList = async (newTicketData) => {
+    await addDoc(collection(db, "tickets"), newTicketData);
     setFormVisibleOnPage(false)
   }
 
