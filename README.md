@@ -41,11 +41,18 @@
     appId: process.env.REACT_APP_FIREBASE_APP_ID 
   }
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-export default db;
+    export default db;
   ```
+
+## implement client-side routing
+* `npm install react-router-dom@6`
+* sketch the signin component
+* modify the App.js component:
+  * import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+  * wrap everything in <Router> and add as many <Routes> beneath as needed
 
 
 ## Important Note to Epicodus Students
