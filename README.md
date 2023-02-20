@@ -4,11 +4,20 @@
 
 *NOTE: where state lives is _not_ changing. Since we have multiple child components that need access to state, ticketControl will still hold state data. if this were a larger app we could include custom hooks, but this is so small it can stay where it is
 
-# Step 1 - refactoring 
+# refactoring 
 * update the class component declaration to function component
 * comment out the constructor (for now, it will need a refactor & eventual removal)
 * turn class methods into funcs by adding const declarations
 * remove the render() method
+
+# npm directives
+* `npm install firebase@9`
+
+# configuring firebase
+* install as above
+* add an .env and add to gitignore & commit before continuing!
+* add an .env and add to gitignore & commit before continuing!
+* find the code snippet from project homepage > cog > project settings > desired app > look for `firebaseConfig` var
 
 
 ## Important Note to Epicodus Students
