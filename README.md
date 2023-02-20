@@ -18,6 +18,34 @@
 * add an .env and add to gitignore & commit before continuing!
 * add an .env and add to gitignore & commit before continuing!
 * find the code snippet from project homepage > cog > project settings > desired app > look for `firebaseConfig` var
+* to the .env, create env constants for export:
+  ```
+  REACT_APP_FIREBASE_API_KEY = "YOUR-UNIQUE-CREDENTIALS"
+  REACT_APP_FIREBASE_AUTH_DOMAIN = "YOUR-PROJECT-NAME.firebaseapp.com"
+  REACT_APP_FIREBASE_PROJECT_ID = "YOUR-PROJECT-FIREBASE-PROJECT-ID"
+  REACT_APP_FIREBASE_STORAGE_BUCKET = "YOUR-PROJECT-NAME.appspot.com"
+  REACT_APP_FIREBASE_MESSAGING_SENDER_ID = "YOUR-PROJECT-SENDER-ID"
+  REACT_APP_FIREBASE_APP_ID = "YOUR-PROJECT-APP-ID"
+  ```
+* create `src/firebase.js` with the following code:
+  ```
+  import { initializeApp } from "firebase/app";
+  import { getFirestore } from 'firebase/firestore';
+
+  const firebaseConfig = {
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID 
+  }
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+export default db;
+  ```
 
 
 ## Important Note to Epicodus Students
