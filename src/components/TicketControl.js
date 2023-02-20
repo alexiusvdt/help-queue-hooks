@@ -4,7 +4,7 @@ import TicketList from './TicketList';
 import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
 import db from './../firebase.js';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, onSnapshot } from "firebase/firestore";
 
 function TicketControl() {
 
@@ -12,6 +12,24 @@ function TicketControl() {
   const [mainTicketList, setMainTicketList] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [editing, setEditing] = useState(false);
+
+  // create the listener ONCE
+  // return a cleanup function (ln29) for the useEffect hook to run when ticketControl unmounts
+  // onSnapshot() takes 3 args: doc or collection ref, callback function to handle a successful request, and callback for errors
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      collection(db, "tickets"),
+      (collectionSnapshot) => {
+        //do something with ticket data
+      },
+      (error) => {
+        //do something with the error
+      }
+    );
+
+    return () => unSubscribe();
+  }, {});
 
 
   const handleClick = () => {
