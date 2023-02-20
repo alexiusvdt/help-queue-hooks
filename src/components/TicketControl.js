@@ -3,8 +3,7 @@ import NewTicketForm from './NewTicketForm';
 import TicketList from './TicketList';
 import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
-// destructuring required on named export
-import { db } from './../firebase.js';
+import { db, auth } from './../firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
 
 function TicketControl() {
@@ -15,30 +14,22 @@ function TicketControl() {
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState(null);
 
-  // collectionSnapshot is a QuerySnapshot object made of one or more DocumentSnapshot objs
-  // when we call forEach(...) below, that's the QuerySnapshot method, not js Array.prototype.forEach(...)
-  // this is where that docs property comes from, returning an array of the collections' data
   useEffect(() => {
     const unSubscribe = onSnapshot(
       collection(db, "tickets"),
       (collectionSnapshot) => {
-        //firebase does not store data in a similar way that JS does.
-        // we need to manually create an array & loop through the returned collection, create an obj ticket, and push to the array
         const tickets = [];
         collectionSnapshot.forEach((doc) => {
           tickets.push({
             names: doc.data().names,
             location: doc.data().location,
             issue: doc.datat().issue,
-            // this is where we implement the doc id as our unique ID
             id: doc.id
-// after push({ could be replaced with ...doc.data() as the spread operator takes all the documents data into a js object
           });
         });
         setMainTicketList(tickets);
       },
       (error) => {
-        // FirestoreError obj with prop message 
         setError(error.message);
       }
     );
@@ -64,7 +55,6 @@ function TicketControl() {
    setEditing(true);
   }
 
-  // mainTicketList state is now triggered from the listener on update
   const handleEditingTicketInList = async (ticketToEdit) => {
     const ticketRef = doc(db, "tickets", ticketToEdit.id);
     await updateDoc(ticketRef, ticketToEdit);
@@ -82,10 +72,17 @@ function TicketControl() {
     setSelectedTicket(selection);
   }
 
-  let currentlyVisibleState = null;
-  let buttonText = null; 
-
-  if(error) {
+  if (auth.currentUser == null) {
+    return(
+      <React.Fragment>
+        <h1>You must be signed in to access the queue.</h1>
+      </React.Fragment>
+    )
+  } else if (auth.currentUser != null) {
+    let currentlyVisibleState = null;
+    let buttonText = null; 
+  
+    if (error) {
     currentlyVisibleState = <p>There was an error: {error}</p>
   } else if (editing ) {      
     currentlyVisibleState =
@@ -116,6 +113,7 @@ function TicketControl() {
       {error ? null : <button onClick={handleClick}>{buttonText}</button>} 
     </React.Fragment>
   );
+  }
 }
 
 export default TicketControl;
