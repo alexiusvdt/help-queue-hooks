@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
 
-//define our config pointing to the created webapp
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -11,11 +11,10 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_FIREBASE_APP_ID 
 }
 
-// initialize the db with the correct params
-// initializeApp instantiates our firebase which we save in app
 const app = initializeApp(firebaseConfig);
-// pass in the firebase to firestore and store it in db
+const auth = getAuth(app);
 const db = getFirestore(app);
 
-
-export default db;
+// now that we export two things, we no longer export default!
+// these are called named exports
+export { db, auth };
