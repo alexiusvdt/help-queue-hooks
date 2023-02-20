@@ -12,25 +12,37 @@ function TicketControl() {
   const [mainTicketList, setMainTicketList] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [error, setError] = useState(null);
 
-  // create the listener ONCE
-  // return a cleanup function (ln29) for the useEffect hook to run when ticketControl unmounts
-  // onSnapshot() takes 3 args: doc or collection ref, callback function to handle a successful request, and callback for errors
-
+  // collectionSnapshot is a QuerySnapshot object made of one or more DocumentSnapshot objs
+  // when we call forEach(...) below, that's the QuerySnapshot method, not js Array.prototype.forEach(...)
+  // this is where that docs property comes from, returning an array of the collections' data
   useEffect(() => {
     const unSubscribe = onSnapshot(
       collection(db, "tickets"),
       (collectionSnapshot) => {
-        //do something with ticket data
+        //firebase does not store data in a similar way that JS does.
+        // we need to manually create an array & loop through the returned collection, create an obj ticket, and push to the array
+        const tickets = [];
+        collectionSnapshot.forEach((doc) => {
+          tickets.push({
+            names: doc.data().names,
+            location: doc.data().location,
+            issue: doc.datat().issue,
+            // this is where we implement the doc id as our unique ID
+            id: doc.id
+// after push({ could be replaced with ...doc.data() as the spread operator takes all the documents data into a js object
+          });
+        });
+        setMainTicketList(tickets);
       },
       (error) => {
-        //do something with the error
+        // FirestoreError obj with prop message 
+        setError(error.message);
       }
     );
-
     return () => unSubscribe();
   }, {});
-
 
   const handleClick = () => {
     if (selectedTicket != null) {
@@ -61,11 +73,6 @@ function TicketControl() {
     setSelectedTicket(null);
   }
 
-  // helper func from firestore
-  // this is changed to an async call/response to the db
-  // collection() takes in the db instance and the desired collection name returning a CollectionReference obj
-  // addDoc() does just that with 2 args: collection reference and new data to be added
-  // NOTE: the data we add as 2nd arg must always be an obj
   const handleAddingNewTicketToList = async (newTicketData) => {
     await addDoc(collection(db, "tickets"), newTicketData);
     setFormVisibleOnPage(false)
@@ -79,7 +86,9 @@ function TicketControl() {
   let currentlyVisibleState = null;
   let buttonText = null; 
 
-  if (editing ) {      
+  if(error) {
+    currentlyVisibleState = <p>There was an error: {error}</p>
+  } else if (editing ) {      
     currentlyVisibleState =
       <EditTicketForm 
       ticket = {selectedTicket}
@@ -105,7 +114,7 @@ function TicketControl() {
   return (
     <React.Fragment>
       {currentlyVisibleState}
-      <button onClick={handleClick}>{buttonText}</button> 
+      {error ? null : <button onClick={handleClick}>{buttonText}</button>} 
     </React.Fragment>
   );
 }
