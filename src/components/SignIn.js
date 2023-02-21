@@ -64,13 +64,13 @@ function SignIn() {
       {signInSuccess}
       <form onSubmit={doSignIn}>
         <input 
-        type='text'
-        name="signinEmail"
-        placeholder="email" />
+          type='text'
+          name="signinEmail"
+          placeholder="email" />
         <input 
-        type="password"
-        name="signinPassword"
-        placeholder="password" />
+          type="password"
+          name="signinPassword"
+          placeholder="password" />
         <button type='submit'>Sign In</button>
       </form>
       <h1>Sign Out</h1>

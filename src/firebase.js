@@ -15,6 +15,4 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// now that we export two things, we no longer export default!
-// these are called named exports
 export { db, auth };

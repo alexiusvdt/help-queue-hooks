@@ -97,7 +97,8 @@ function TicketControl() {
       onClickingEdit = {handleEditClick} />
     buttonText = "Return to Ticket List";
   } else if (formVisibleOnPage) {
-    currentlyVisibleState = <NewTicketForm onNewTicketCreation={handleAddingNewTicketToList}/>;
+    currentlyVisibleState = <NewTicketForm
+      onNewTicketCreation={handleAddingNewTicketToList} />;
     buttonText = "Return to Ticket List"; 
   } else {
     currentlyVisibleState =
