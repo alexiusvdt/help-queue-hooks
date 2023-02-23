@@ -13,6 +13,7 @@
 # npm directives
 * `npm install firebase@9` (firebase)
 * `npm install date-fns@2` (date fns)
+* `npm install -g firebase-tools` (firebase CLI)
 
 # configuring firebase
 * install as above
@@ -56,7 +57,34 @@
   * wrap everything in <Router> and add as many <Routes> beneath as needed
 
 
-## datetime 
+## firebase CLI
+* `firebase login`
+* `firebase projects:list`
+* `firebase init hosting`
+* work through the prompts:
+  * when `what do you want to use as your public directory?` enter `build`
+  * when `Configure as a single-page app (rewrite all urls to /index.html)?` enter `N`
+  * `Set up automatic builds and deploys with GitHub? (y/N)` enter `N` for now
+  * if `File public/index.html already exists. Overwrite? (y/N)` enter `N`
+* now we have a `firebase.json`, note that "public" needs to have a value of "build"
+* `npm run build` to verify no errors
+* `firebase serve` to view localhost
+* `firebase deploy --only hosting` to deploy
+* firebase deploys to:
+  * PROJECT_ID.web.app
+  * PROJECT_ID.firebaseapp.com
+  Where, PROJECT_ID is the name of your project. In the example code above, the name of the project is help-queue-dc855, so we'd be able to find our project at these locations:
+
+    https://help-queue-dc855.web.app/
+    https://help-queue-dc855.firebaseapp.com/
+
+## redeploying
+
+  *  Make the changes in your code.
+  *  Run npm run build to create a build that's optimized for production.
+  *  Optionally, run firebase serve to make sure your project works and looks as expected.
+  *  Run firebase deploy --only hosting to deploy your project again.
+
 
 ## Important Note to Epicodus Students
 
