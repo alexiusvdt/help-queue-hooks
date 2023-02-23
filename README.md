@@ -11,7 +11,8 @@
 * remove the render() method
 
 # npm directives
-* `npm install firebase@9`
+* `npm install firebase@9` (firebase)
+* `npm install date-fns@2` (date fns)
 
 # configuring firebase
 * install as above
@@ -54,6 +55,8 @@
   * import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
   * wrap everything in <Router> and add as many <Routes> beneath as needed
 
+
+## datetime 
 
 ## Important Note to Epicodus Students
 

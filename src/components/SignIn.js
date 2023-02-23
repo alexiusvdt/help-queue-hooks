@@ -13,7 +13,6 @@ function SignIn() {
     const email = event.target.email.value;
     const password = event.target.password.value;
     createUserWithEmailAndPassword(auth, email, password)
-    // firebase object UserCredential representing the newly created user  
     .then((userCredential) => {
         setSignUpSuccess(`You've successfully signed up ${userCredential.user.email}!`)
       })

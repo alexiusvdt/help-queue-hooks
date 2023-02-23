@@ -5,6 +5,7 @@ import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
 import { db, auth } from './../firebase.js';
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { formatDistanceToNow } from 'date-fns';
 
 function TicketControl() {
 
@@ -20,10 +21,17 @@ function TicketControl() {
       (collectionSnapshot) => {
         const tickets = [];
         collectionSnapshot.forEach((doc) => {
+          //access the Firestore Timestamp obj, then call toDate to format for javascript
+          const timeOpen = doc.get('timeOpen', {serverTimestamps: "estimate"}).toDate();
+          // take the parsed data and set to new javascript date
+          const jsDate = new Date(timeOpen);
           tickets.push({
             names: doc.data().names,
             location: doc.data().location,
             issue: doc.datat().issue,
+            //add ticket props
+            timeOpen: jsDate,
+            formattedWaitTime: formatDistanceToNow(jsDate),
             id: doc.id
           });
         });
@@ -35,6 +43,9 @@ function TicketControl() {
     );
     return () => unSubscribe();
   }, {});
+
+
+
 
   const handleClick = () => {
     if (selectedTicket != null) {
