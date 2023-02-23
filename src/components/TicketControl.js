@@ -45,6 +45,27 @@ function TicketControl() {
   }, {});
 
 
+    useEffect(() => {
+      function updateTicketElapsedWaitTime() {
+        // map through mainTicketList to update the formattedWaitTime
+        const newMainTicketList = mainTicketList.map(ticket => {
+          const newFormattedWaitTime = formatDistanceToNow(ticket.timeOpen);
+          return {...ticket, formattedWaitTime: newFormattedWaitTime};
+        });
+        //pass the updated version to state
+        setMainTicketList(newMainTicketList);
+      }
+      //set interval takes 2 args: func to run and the interval in ms (here 1 minute)
+      const waitTimeUpdateTimer = setInterval(() =>
+        updateTicketElapsedWaitTime(), 
+        60000
+      );
+
+      //calling clearInterval cleans up on unmount and before every rerun to prevent multiple intervals
+      return function cleanup() {
+        clearInterval(waitTimeUpdateTimer);
+      }
+    }, [mainTicketList])
 
 
   const handleClick = () => {
