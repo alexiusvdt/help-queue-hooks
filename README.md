@@ -14,6 +14,7 @@
 * `npm install firebase@9` (firebase)
 * `npm install date-fns@2` (date fns)
 * `npm install -g firebase-tools` (firebase CLI)
+* `npm install styled-components` (component styling)
 
 # configuring firebase
 * install as above
@@ -84,6 +85,34 @@
   *  Run npm run build to create a build that's optimized for production.
   *  Optionally, run firebase serve to make sure your project works and looks as expected.
   *  Run firebase deploy --only hosting to deploy your project again.
+
+
+## Styling
+* [documentation](https://styled-components.com/docs)
+* import `styled` from `styled-components`
+* create a var that holds your styling:
+  const HelpQueueHeader = styled.h1
+    font-size: 20px
+    etc
+  ;
+* call the component inside tags w/ the same name:
+  ```<HelpQueueHeader>
+    HelpQueue
+  </HelpQueueHeader>```
+
+* full example:
+```
+const StyledWrapper = styled.section`
+  background-color: orange;
+`;
+
+function Header(){
+  return (
+    <StyledWrapper>
+      ...
+    </StyledWrapper>
+  );
+}```
 
 
 ## Important Note to Epicodus Students
