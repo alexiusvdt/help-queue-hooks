@@ -11,6 +11,9 @@
 ===========================================================================================
 
 ## Set Up and Launch 🚀
+- clone this project to your workspace
+- open a command line and navigate to the `help-queue-hooks` directory
+- run `npm install`
 
 ## Known Issues
 
