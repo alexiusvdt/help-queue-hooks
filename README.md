@@ -14,8 +14,13 @@
 - clone this project to your workspace
 - open a command line and navigate to the `help-queue-hooks` directory
 - run `npm install`
+- adjust the .firebaserc file to your project ID
+- modify the .env template with your credentials (note: this can be found via the code snippet from project homepage > cog > project settings > desired app > sdk/setup section as const `firebaseConfig`)
+- run the project using `npm run start`
 
 ## Known Issues
+- updating ticket doesn't pass old ticket values in to form
+- could use some general styling updates
 
 ## Thanks
 

@@ -4,7 +4,6 @@ import TicketList from './TicketList';
 import EditTicketForm from './EditTicketForm';
 import TicketDetail from './TicketDetail';
 import { db, auth } from './../firebase.js';
-//two new imports query & orderby
 import { collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy } from "firebase/firestore";
 import { formatDistanceToNow } from 'date-fns';
 
@@ -32,7 +31,7 @@ function TicketControl() {
           tickets.push({
             names: doc.data().names,
             location: doc.data().location,
-            issue: doc.datat().issue,
+            issue: doc.data().issue,
             timeOpen: jsDate,
             formattedWaitTime: formatDistanceToNow(jsDate),
             id: doc.id
