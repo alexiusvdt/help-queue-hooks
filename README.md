@@ -8,7 +8,7 @@
 | Thanks   | [link](##thanks)        |
 | License Info   | [link](##license)        |
 
-===========================================================================================
+======================================================
 
 ## Set Up and Launch 🚀
 - clone this project to your workspace
@@ -19,7 +19,6 @@
 - run the project using `npm run start`
 
 ## Known Issues
-- updating ticket doesn't pass old ticket values in to form
 - could use some general styling updates
 
 ## Thanks
